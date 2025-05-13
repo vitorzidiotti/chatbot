@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot com Regimento e Gemini AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-unicv: #006837;
+            --amarelo-unicv: #FFC300;
+            --cinza-claro: #f5f6fa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cinza-claro);
+            color: #333;
+        }
+
+        header {
+            background-color: var(--verde-unicv);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--verde-unicv);
+        }
+
+        textarea {
+            font-size: 16px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 120px;
+            transition: 0.3s border-color ease;
+        }
+
+        textarea:focus {
+            border-color: var(--verde-unicv);
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: var(--verde-unicv);
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 14px 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #004f2d;
+        }
+
+        .resposta {
+            background-color: #e8f5e9;
+            border-left: 6px solid var(--verde-unicv);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            header {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        Chatbot Regimental UniCV
+    </header>
+
+    <div class="container">
+        <form method="POST" id="chatForm">
+            <label for="mensagem">Digite sua pergunta:</label>
+            <textarea name="mensagem" id="mensagem" required>{{ pergunta }}</textarea>
+            <input type="submit" value="Enviar">
+        </form>
+
+        {% if resposta %}
+        <div class="resposta">
+            <strong>Gemini:</strong><br>
+            <p>{{ resposta|safe }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        Desenvolvido com base no regimento interno | UniCV
+    </footer>
+
+    <script>
+        const textarea = document.getElementById("mensagem");
+        const form = document.getElementById("chatForm");
+
+        textarea.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                form.submit();
+            }
+        });
+
+        window.onload = () => textarea.focus();
+    </script>
+</body>
+</html>
